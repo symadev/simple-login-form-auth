@@ -1,8 +1,24 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-
+import { AuthContext } from "../ContextProvider/ContextProvider";
 
 const Navbar = () => {
+
+
    
+    const {name} = useContext(AuthContext );
+    console.log(name);
+    //aikahne console korle name ar value dekha jabe
+
+
+
+    // React Context API ব্যবহার করা হয় props drilling এড়ানোর জন্য এবং অ্যাপের ভেতরে global state management সহজ করতে। 
+    // যখন আমাদের একটি data বা state অনেক গভীর কম্পোনেন্টে পাঠাতে হয়, 
+    // তখন বারবার props হিসেবে পাঠানো ঝামেলাপূর্ণ হয়। এই সমস্যা সমাধানের জন্য Context API ব্যবহার করা হয়।
+
+
+
+
         const links =  <>
  <li><NavLink to="/">Home</NavLink></li>
  <li><NavLink to="/login">Login</NavLink></li>
@@ -53,7 +69,7 @@ const Navbar = () => {
                 
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <a className="btn">{name}</a>
             </div>
         </div>
     );
