@@ -1,13 +1,15 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../ContextProvider/ContextProvider";
 
 const Navbar = () => {
 
 
    
-    const {name} = useContext(AuthContext );
-    console.log(name);
+    const {user,signOutUser} = useContext(AuthContext );
+    console.log(user);
+
+
     //aikahne console korle name ar value dekha jabe
 
 
@@ -15,6 +17,21 @@ const Navbar = () => {
     // React Context API ব্যবহার করা হয় props drilling এড়ানোর জন্য এবং অ্যাপের ভেতরে global state management সহজ করতে। 
     // যখন আমাদের একটি data বা state অনেক গভীর কম্পোনেন্টে পাঠাতে হয়, 
     // তখন বারবার props হিসেবে পাঠানো ঝামেলাপূর্ণ হয়। এই সমস্যা সমাধানের জন্য Context API ব্যবহার করা হয়।
+
+
+const handleSignOut = () =>{
+    signOutUser()
+    .then(() =>{
+        console.log("user sign out successfully");
+
+      })
+      .catch(error=>{
+         console.log('Error', error.message);
+      })
+}
+
+
+
 
 
 
@@ -69,8 +86,25 @@ const Navbar = () => {
                 
             </div>
             <div className="navbar-end">
-                <a className="btn">{name}</a>
+                {/* <a className="btn">{user?.email}</a> */}
+                <a className="btn">
+                   {
+                     user ?<>  
+                     <span>{user.email}</span>
+                     <a  onClick = {handleSignOut}className="btn">Sign out</a>
+                     
+                       </>
+                      : <Link to='/login'>Login</Link>
+                   } 
+                   </a>
+
+
+                {/* user jdi thake taile mail ar kache jaba r na hoi jaba na */}
+            
+            
             </div>
+
+
         </div>
     );
     

@@ -1,7 +1,15 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../ContextProvider/ContextProvider";
 
 
 const Register = () => {
+
+
+const {createUser} = useContext(AuthContext)
+
+
+
 
     
     const handleRegister = (event) => {
@@ -9,7 +17,31 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
         console.log(email,password);
-    
+
+
+
+        createUser(email,password)
+        .then(result =>{
+          console.log(result.user);
+
+        })
+        .catch(error=>{
+           console.log('Error', error.message);
+        })
+
+
+
+
+        // এই অংশটি প্রয়োজন হয় কারণ createUser(email, password) একটি Promise রিটার্ন করে।
+        // 1️ createUser(email, password) ফাংশনটি Firebase Authentication থেকে ইউজার তৈরি করার জন্য ডাটা পাঠায়।
+
+        // এটি একটি অ্যাসিনক্রোনাস (asynchronous) অপারেশন, অর্থাৎ এটি তাৎক্ষণিকভাবে ফলাফল দেয় না।
+        // Firebase রিকোয়েস্টটি প্রসেস করে ইউজার তৈরি হলে then() ব্লক চলে, আর ত্রুটি হলে catch() ব্লক চলে।
+
+
+
+
+
     }
     return (
         <div className="hero bg-base-200 min-h-screen">
@@ -41,7 +73,7 @@ const Register = () => {
                         </div>
              
             </form>
-            <p className="ml-12 p-4 text-sm">Already sign in?   please <Link to ="/register">Register</Link></p>
+            <p className="ml-12 p-4 text-sm">Already sign in?   please <Link to ="/login">Login</Link></p>
           </div>
         </div>
       </div>
