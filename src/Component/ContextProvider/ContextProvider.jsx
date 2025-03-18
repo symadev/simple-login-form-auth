@@ -8,32 +8,38 @@ export const AuthContext = createContext(null);
 
 const ContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const name= 'potato alu mia';
+
 
    
 
 
 const createUser = (email,password) =>{
+    setLoading(true);
     return createUserWithEmailAndPassword(auth,email,password)
 }
 
 
   const signInUser =  (email,password) =>{
+    setLoading(true);
     return signInWithEmailAndPassword(auth,email,password)
 
 }
 
 const signOutUser = () =>{
+    setLoading(true);
     return signOut(auth);
 }
 
 
-
+///this process is called ovserver ---je bolbe je ami data ta paichi
 useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
         console.log('currently logged user', currentUser);
         setUser(currentUser);
+        //user check korar por
+        setLoading(false);
     });
 
     return () => unsubscribe(); // Cleanup function to prevent memory leaks
@@ -67,7 +73,7 @@ useEffect(() => {
 
 
     const authInfo = {
-        name,
+        loading,
         createUser,
         signInUser,
         signOutUser,
